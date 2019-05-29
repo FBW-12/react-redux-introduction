@@ -1,4 +1,4 @@
-React &amp; Redux To-do List
+React &amp; Redux To-do List 
 ===
 
 Following this tutorial you'll review those topics:
