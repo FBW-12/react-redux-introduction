@@ -1495,7 +1495,7 @@ As you can see we added 3 new methods.
 
 ### 14.3 Updating the `ToDoList`
 
-We take the mutations that we passed from the `ToDoWidget` and pass them to the `ToDoItem`, where they will be used for different events. We will also change from a `ul` to a `table`, to achieve the layout we want to have.
+We take the mutations and pass them to the `ToDoItem`, where they will be used for different events. We will also change from a `ul` to a `table`, to achieve the layout we want to have.
 
 ```markdown
 src/components/ToDoList.js
@@ -1990,7 +1990,7 @@ You don't have to type any code for this chapter. Please read everything careful
 
 ### 17.1 What it is
 
-Looking at our current ToDo application we can see, that we passed down functions to mutate the state a lot. For example the `ToDoWidget` component has to pass the `updateToDoText`, `toggleToDoDone` and `removeToDo` functions to the `ToDoList` component.
+Looking at our current ToDo application we can see, that we passed down functions to mutate the state a lot. For example the `ToDoList` component has to pass the `updateToDoText`, `toggleToDoDone` and `removeToDo` functions it received from the `App` component down to the `ToDoItem` component.
 
 To reduce the amount of props and to get rid of the need to pass things down through components that don't even need the functions or data, we will use a famous state library called [Redux](https://redux.js.org/).
 
