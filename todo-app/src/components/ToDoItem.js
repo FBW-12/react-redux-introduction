@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import { updateToDoText, toggleToDo, removeToDo } from "../actions/index";
+import React from 'react';
+import { connect } from 'react-redux';
+import { updateToDoText, toggleToDo, removeToDo } from '../actions/index';
 
 class ToDoItem extends React.Component {
   handleInputKeyUp(e) {
@@ -51,7 +51,10 @@ class ToDoItem extends React.Component {
         <td className="col-action">
           <i
             className="icon-remove far fa-trash-alt"
-            onClick={e => this.props.removeToDo(todo.uuid)}
+            onClick={() => this.props.removeToDo(todo.uuid)}
+            onKeyUp={() => this.props.removeToDo(todo.uuid)}
+            role="button"
+            tabIndex="0"
           />
         </td>
       </tr>
