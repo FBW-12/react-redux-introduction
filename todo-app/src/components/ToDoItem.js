@@ -52,7 +52,7 @@ class ToDoItem extends React.Component {
           <i
             className="icon-remove far fa-trash-alt"
             onClick={() => this.props.removeToDo(todo.uuid)}
-            onKeyUp={() => this.props.removeToDo(todo.uuid)}
+            onKeyUp={e => e.keyCode === 13 && this.props.removeToDo(todo.uuid)}
             role="button"
             tabIndex="0"
           />
@@ -67,6 +67,6 @@ export default connect(
   {
     updateToDoText,
     toggleToDo,
-    removeToDo
+    removeToDo,
   }
 )(ToDoItem);
