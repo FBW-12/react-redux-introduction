@@ -14,16 +14,18 @@ function filter(state = actions.filters.ALL, action) {
 function toDoItems(state = {}, action) {
   switch (action.type) {
     case actions.ADD_TODO: {
-      const id = uuid();
-
-      return {
-        ...state,
-        [id]: {
-          uuid: id,
-          text: action.text,
-          done: false
-        }
-      };
+      if (action.text.length !== 0) {
+        const id = uuid();
+        return {
+          ...state,
+          [id]: {
+            uuid: id,
+            text: action.text,
+            done: false,
+          },
+        };
+      }
+      return state;
     }
     case actions.UPDATE_TODO_TEXT:
       return {
