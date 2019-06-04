@@ -13,7 +13,7 @@ function filter(state = actions.filters.ALL, action) {
 
 function toDoItems(state = {}, action) {
   switch (action.type) {
-    case actions.ADD_TODO:
+    case actions.ADD_TODO: {
       const id = uuid();
 
       return {
@@ -24,6 +24,7 @@ function toDoItems(state = {}, action) {
           done: false
         }
       };
+    }
     case actions.UPDATE_TODO_TEXT:
       return {
         ...state,
@@ -40,11 +41,12 @@ function toDoItems(state = {}, action) {
           done: !state[action.uuid].done
         }
       };
-    case actions.REMOVE_TODO:
+    case actions.REMOVE_TODO: {
       let nextState = { ...state };
       delete nextState[action.uuid];
 
       return nextState;
+    }
     default:
       return state;
   }
