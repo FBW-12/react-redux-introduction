@@ -952,7 +952,7 @@ src/components/ToDoForm.js
 import React from 'react';
 
 class ToDoForm extends React.Component {
-  handleSubmit() {
+  handleSubmit(e) {
     e.preventDefault();
     console.log(`Create new item`);
   }
