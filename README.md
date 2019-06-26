@@ -2779,9 +2779,104 @@ render(
 );
 ```
 
-### 18.11 The End
+## 19. Type-checking With PropTypes
 
-**Congratulations - You did it!**
+If a prop is passed to a component in a type or form other than is required, the component may not behave as expected. Hence, a great way of improving React components and catching bugs in your application is props validation. React has built-in type-checking abilities to accomplish this. Javascript has [7 basic data types](https://javascript.info/types), but React offers a wide range of additional [validators](https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes) to make sure the data you receive in a component is valid. When an invalid value is provided for a prop, a warning will be shown in the console.
+Note that React type-checking only happens in development mode, enabling you to catch bugs in your React application while developing. For performance reasons, it is not triggered in production environment.
+
+### 19.1 Import PropTypes
+
+React components use a special property named propTypes to setup type-checking. To access this property we need to add the following import statement to our components that receive props:
+
+```jsx
+import PropTypes from 'prop-types';
+```
+
+If you create a React project that is not bootstrapped with Create React App, you will need to add this package as a dependency, but in our case we already have access to it.
+
+### 19.2 Validate props
+
+Import PropTypes in _Header.js_ and append the following code outside your functional component:
+
+```markdown
+src/modules/Header.js
+```
+
+```jsx
+Header.propTypes = {
+  tagline: PropTypes.string,
+  children: PropTypes.element,
+};
+```
+
+The Header component expects two props, _tagline_ and _children_ and we specify that _tagline_ should always be a string and that any _children_ should be React elements. Try changing your validation like this:
+
+```jsx
+tagline: PropTypes.number;
+```
+
+You should now see an error in your console. Your type-checking is working! Let's go through the other components.
+
+```markdown
+src/modules/ToDoFilter.js
+```
+
+```jsx
+ToDoFilter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired,
+};
+```
+
+You can chain any of the validators with `isRequired` to make sure a warning is shown if the prop isn't provided. For example, our app would not work properly without the _setFilter_ function, so we make sure to require it.
+
+```markdown
+src/modules/ToDoForm.js
+```
+
+```jsx
+ToDoForm.propTypes = {
+  addToDo: PropTypes.func.isRequired,
+};
+```
+
+```markdown
+src/modules/ToDoItem.js
+```
+
+```jsx
+ToDoItem.propTypes = {
+  todo: PropTypes.shape({
+    uuid: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    done: PropTypes.bool.isRequired,
+  }).isRequired,
+  toggleToDo: PropTypes.func.isRequired,
+  updateToDoText: PropTypes.func.isRequired,
+  removeToDo: PropTypes.func.isRequired,
+};
+```
+
+```markdown
+src/modules/ToDoList.js
+```
+
+```jsx
+ToDoList.propTypes = {
+  items: PropTypes.objectOf(
+    PropTypes.shape({
+      done: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired,
+      uuid: PropTypes.string.isRequired,
+    })
+  ),
+  filter: PropTypes.string.isRequired,
+};
+```
+
+### 20. The End
+
+**Congratulations - You did it!** 🤜💥🤛
 
 You've finished this nice little introduction and your final result should be a fully working React application that uses Redux for the state and synchronizes it with the browser's localStorage.
 
