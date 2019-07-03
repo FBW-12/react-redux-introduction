@@ -14,5 +14,4 @@ export default Header;
 
 Header.propTypes = {
   tagline: PropTypes.string,
-  children: PropTypes.element,
 };

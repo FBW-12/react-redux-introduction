@@ -2786,7 +2786,7 @@ Note that React type-checking only happens in development mode, enabling you to 
 
 ### 19.1 Import PropTypes
 
-React components use a special property named propTypes to setup type-checking. To access this property we need to add the following import statement to our components that receive props:
+React components use a special property named propTypes to setup type-checking. To access the predefined type validators our props can have we need to add the following import statement to our components that receive props:
 
 ```jsx
 import PropTypes from 'prop-types';
@@ -2805,11 +2805,10 @@ src/modules/Header.js
 ```jsx
 Header.propTypes = {
   tagline: PropTypes.string,
-  children: PropTypes.element,
 };
 ```
 
-The Header component expects two props, _tagline_ and _children_ and we specify that _tagline_ should always be a string and that any _children_ should be React elements. Try changing your validation like this:
+The Header component expects the _tagline_ props and we specify that _tagline_ should always be a string. Try changing your validation like this:
 
 ```jsx
 tagline: PropTypes.number;
