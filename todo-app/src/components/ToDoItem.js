@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateToDoText, toggleToDo, removeToDo } from '../actions/index';
+import PropTypes from "prop-types";
 
 class ToDoItem extends React.Component {
   handleInputKeyUp(e) {
@@ -70,3 +71,14 @@ export default connect(
     removeToDo,
   }
 )(ToDoItem);
+
+ToDoItem.propTypes = {
+  todo: PropTypes.shape({
+    uuid: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    done: PropTypes.bool.isRequired,
+  }).isRequired,
+  toggleToDo: PropTypes.func.isRequired,
+  updateToDoText: PropTypes.func.isRequired,
+  removeToDo: PropTypes.func.isRequired,
+};

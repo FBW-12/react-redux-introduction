@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { filters, setFilter } from "../actions/index";
+import PropTypes from "prop-types";
 
 class ToDoFilter extends React.Component {
   render() {
@@ -43,3 +44,8 @@ export default connect(
     setFilter
   }
 )(ToDoFilter);
+
+ToDoFilter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired,
+};

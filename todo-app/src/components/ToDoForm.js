@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addToDo } from "../actions/index";
+import PropTypes from "prop-types";
 
 class ToDoForm extends React.Component {
   textInput = React.createRef();
@@ -39,3 +40,7 @@ export default connect(
     addToDo
   }
 )(ToDoForm);
+
+ToDoForm.propTypes = {
+  addToDo: PropTypes.func.isRequired,
+};

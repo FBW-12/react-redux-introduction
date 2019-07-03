@@ -1,6 +1,7 @@
 import React from "react";
 import ToDoItem from "./ToDoItem";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class ToDoList extends React.Component {
   filteredItems = () => {
@@ -40,3 +41,14 @@ export default connect(state => ({
   items: state.toDoItems,
   filter: state.filter
 }))(ToDoList);
+
+ToDoList.propTypes = {
+  items: PropTypes.objectOf(
+    PropTypes.shape({
+      done: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired,
+      uuid: PropTypes.string.isRequired,
+    })
+  ),
+  filter: PropTypes.string.isRequired,
+};
