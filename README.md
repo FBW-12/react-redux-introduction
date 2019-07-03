@@ -2880,3 +2880,114 @@ ToDoList.propTypes = {
 You've finished this nice little introduction and your final result should be a fully working React application that uses Redux for the state and synchronizes it with the browser's localStorage.
 
 Have fun coding with React!
+
+## Bonus: Hooks
+
+Hooks are a [new addition](https://reactjs.org/docs/hooks-intro.html) in React 16.8. They give function components the ability to use local component state, execute side effects, and more.
+
+Let's look at how React hooks can replace a lifecycle method that we used in one of our class components. The `Help` component uses the `componentDidMount()` method to update the document title every time the component is mounted.
+
+```markdown
+src/modules/Help.js
+```
+
+```jsx
+class Help extends React.Component {
+  componentDidMount() {
+    document.title = "Help | What to do?";
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header tagline="Your questions will be answered here." />
+        <dl>
+          <dt>Where is the data stored?</dt>
+          <dd>We store all information in your browser's LocalStorage.</dd>
+        </dl>
+      </div>
+    );
+  }
+}
+```
+
+We can use the `useEffect()` hook to achieve the same functionality in a function component. In order to use this hook, we need to add it to our import statements as a named import:
+
+```jsx
+import React, { useEffect } from 'react';
+```
+
+Now we can re-write our class component as a function component:
+
+```jsx
+export default function Help() {
+  useEffect(() => {
+    document.title = 'Help | What to do?';
+  }, []);
+
+  return (
+    <div className="container">
+      <Header tagline="Your questions will be answered here." />
+      <dl>
+        <dt>Where is the data stored?</dt>
+        <dd>We store all information in your browser's LocalStorage.</dd>
+      </dl>
+    </div>
+  );
+}
+```
+
+`useEffect()` runs both after the first render _and_ after every update. In other words, it behaves like `componentDidMount()` and `componentDidUpdate()`. You can tell React to skip applying an effect if certain values haven’t changed between re-renders. To do so, pass an array as an optional second argument to `useEffect()`. When doing so, React will compare the value of the provided argument from the previous render and from the next render. If the value has not changed, `useEffect()` will not run. If we pass in an empty array as the second argument, `useEffect()` will only apply an effect after the first render, which is the functionality we were looking for in our example.
+
+### Redux Hooks
+
+React Redux also offers a [set of hook APIs](https://react-redux.js.org/next/api/hooks) as an alternative to the existing `connect()` Higher Order Component. These APIs allow you to subscribe to the Redux store and dispatch actions, without having to wrap your components in `connect()`.
+
+These hooks were first added to React Redux in v7.1.0, so make sure your `react-redux` dependency has this version or higher.
+
+We will use the `useSelector()` hook to access global Redux state properties and `useDispatch()` to dispatch actions to the Redux reducer.
+
+```markdown
+src/modules/ToDoFilter.js
+```
+
+```jsx
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { filters, setFilter } from '../actions';
+
+export default function TodoFilter() {
+  const activeFilter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
+  return (
+    <div className="todo-filters text-right">
+      <div
+        className="btn-group btn-group-sm"
+        role="group"
+        aria-label="Set a filter to show items"
+      >
+        {Object.keys(filters).map(filterKey => {
+          const filter = filters[filterKey];
+          return (
+            <button
+              type="button"
+              className={`btn btn-light ${
+                activeFilter === filter ? 'active' : ''
+              }`}
+              onClick={() => dispatch(setFilter(filter))}
+              key={filterKey}
+            >
+              {filter}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+```
+
+In the `todo-app-hooks` folder of this repository you will find the application we built in this tutorial re-written with only function components and hooks.
+
+Note that as of today - June 2019 - `useSelector()` and `useDispatch()` do not allow runtime props validation. We can, of course, still validate props that are passed from a React parent component to a child component, for example in `Header.js`. We cannot validate props we receive by subscribing to the Redux store when using hooks to access these props.
